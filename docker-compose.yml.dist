@@ -1,0 +1,48 @@
+code:
+  build: docker/code
+  volumes:
+    - .:/data
+  environment:
+    - SYMFONY_ENV=dev
+    - SYMFONY_DEBUG=1
+
+postgres:
+  image: postgres
+  container_name: postgres
+  ports:
+    - 5432:5432
+  volumes:
+    - ./.data:/var/lib/postgresql/data
+  environment:
+    - POSTGRES_USER=flux
+    - POSTGRES_PASSWORD=fluxpass
+    - SYMFONY_ENV=dev
+    - SYMFONY_DEBUG=1
+
+php-fpm:
+  build: docker/php-fpm
+  container_name: flux-php-fpm
+  volumes_from:
+    - code
+  environment:
+    - SYMFONY_ENV=dev
+
+nginx:
+  build: docker/nginx
+  container_name: nginx
+  ports:
+    - 8080:80
+  volumes_from:
+    - code
+  environment:
+    - SYMFONY_ENV=dev
+    - SYMFONY_DEBUG=1
+
+elasticsearch:
+  build: docker/elasticsearch
+  container_name: elasticsearch
+  ports:
+      - 9200:9200
+      - 9300:9300
+  volumes:
+        - ./docker/elasticsearch/config:/usr/share/elasticsearch/config
