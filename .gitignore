@@ -4,3 +4,4 @@ backend/var
 backend/web/bundles
 backend/vendor
 backend/bin
+twitter/node_modules
