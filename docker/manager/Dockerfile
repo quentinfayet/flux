@@ -1,9 +1,7 @@
-FROM ubuntu
+FROM php:7
 
 RUN apt-get update && apt-get install -y \
         g++ \
-        php7 \
-        php7-curl \
         curl \
         nodejs \
         nodejs-legacy \
@@ -12,9 +10,6 @@ RUN apt-get update && apt-get install -y \
 
 RUN npm install -g \
         npm
-
-RUN gem install -y \
-        sass
 
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer

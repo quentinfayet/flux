@@ -1,2 +1,6 @@
 .idea
 docker-compose.yml
+backend/var
+backend/web/bundles
+backend/vendor
+backend/bin
